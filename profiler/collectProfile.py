@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 import os
 from datetime import datetime
+import argparse
+from pathlib import Path
 
 # Claude generated code, further might be change. Here only for example to collect trace
 
@@ -60,9 +62,16 @@ def train_step(model, optimizer, loss_fn, x, y):
     return loss, predictions
 
 def main():
-    # Создание директории для логов профилировщика
-    log_dir = f"./output_protobuf/{datetime.now().strftime('%Y%m%d-%H%M%S')}"
-    os.makedirs(log_dir, exist_ok=True)
+    parser = argparse.ArgumentParser(description="Trace Reader Script")
+    parser.add_argument('--log-dir', '-o', required=True, type=str, help='Path to store collected profile')
+    args = parser.parse_args()
+
+    log_dir = Path(args.log_dir)
+
+    if not log_dir.exists():
+        log_dir.mkdir(exist_ok=False)
+
+    log_dir = log_dir.__str__()
 
     print(f"Логи профилировщика будут сохранены в: {log_dir}")
 
@@ -82,9 +91,9 @@ def main():
 
     # Опции профилировщика
     options = tf.profiler.experimental.ProfilerOptions(
-        host_tracer_level=2,  # Детальное профилирование хоста
+        host_tracer_level=0,  # Профилирование хоста
         python_tracer_level=1,  # Профилирование Python кода
-        device_tracer_level=1   # Профилирование устройства
+        device_tracer_level=0   # Профилирование устройства
     )
 
     # Старт профилировщика

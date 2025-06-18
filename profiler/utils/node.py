@@ -1,9 +1,8 @@
-
-import json
 from dataclasses import dataclass, InitVar
-import logging as l
+import logging
 
-LOG = l.Logger(__name__, l.INFO)
+logging.basicConfig(level=logging.INFO)
+LOG = logging.getLogger(__name__)
 
 @dataclass
 class Node:
@@ -18,7 +17,7 @@ class Node:
     # unique id among all nodes in graph
     _uniqueId: int = -1
 
-    encodedEdge: InitVar[dict] = None
+    encodedNode: InitVar[dict] = None
 
     def __post_init__(self, encodedNode = None):
         # list of adj for given node
@@ -30,12 +29,12 @@ class Node:
             self.dur = int(encodedNode["duration"])
             self.uid = int(encodedNode["id"])
 
-    def __str__(self) -> str:
+    def __dict__(self):
         if self.uid == -1 or self.name is None:
             warnMsg = f"Storing node that was not inited! From __str__() -> str"
-            LOG.log(l.WARNING, warnMsg)
+            LOG.log(logging.WARNING, warnMsg)
 
-        nodeDict : dict = {
+        return {
             "name" : self.name,
             "ts" : self.ts,
             "duration" : self.dur,
@@ -43,12 +42,19 @@ class Node:
             "adj" : [n.uid for n in self.getNeighbors()]
         }
 
-        return nodeDict.__str__()
+    def isParallelNode(self, node) -> bool:
+        if not isinstance(node, Node):
+            return False
+
+        if node.ts >= self.ts and node.ts <= self.ts + self.dur or \
+           self.ts >= node.ts and self.ts <= node.ts + node.dur:
+                return True
+        return False
 
     # getters and setters
     @property
     def ts(self) -> int:
-        return self.ts
+        return self._ts
     @ts.setter
     def ts(self, ts: int):
         self._ts = ts

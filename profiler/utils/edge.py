@@ -1,7 +1,8 @@
 from dataclasses import dataclass, InitVar
-import logging as l
+import logging
 
-LOG = l.Logger(__name__, l.INFO)
+logging.basicConfig(level=logging.INFO)
+LOG = logging.getLogger(__name__)
 
 @dataclass
 class Edge:
@@ -16,18 +17,16 @@ class Edge:
             self.nodeFromUid = int(encodedEdge["edgeFrom"])
             self.nodeToUid = int(encodedEdge["edgeTo"])
 
-    def __str__(self) -> str:
+    def __dict__(self):
 
         if self.nodeFromUid == -1 or self.nodeToUid == -1:
             msg = f"Edge nodes were not inited! From __str__() -> str"
-            LOG.log(l.WARNING, msg)
+            LOG.log(logging.WARNING, msg)
 
-        edgeDict: dict = {
+        return {
             "edgeFrom" : self.nodeFromUid,
             "edgeTo" : self.nodeToUid
         }
-
-        return edgeDict.__str__()
 
     @property
     def fromUid(self):

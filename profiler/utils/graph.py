@@ -1,8 +1,9 @@
 import json
-from node import Node
-from edge import Edge
+from .node import Node
+from .edge import Edge
 import networkx as nx
 import logging as l
+
 
 LOG = l.Logger(__name__, l.INFO)
 
@@ -12,16 +13,44 @@ class MlirGraph:
     nodes: list[Node] = []
     edges: list[Edge] = []
 
+    nodeGroups: list[list] = []
+
     nodeID = 0
 
-    # node addition O(1)
-    def addNode(self, node: Node):
+    # returns parent source level
+    def addNode(self, node: Node, index: int = None):
         node.uid = self.nodeID
-        self.nodes.append(node)
+        # add by index or append
+        if index is None:
+            self.nodes.append(node)
+        else:
+            self.nodes[index] = node
 
         self.nodeID += 1
 
-    # edge addition O(1)
+        lastLevel = self.nodeGroups.__len__()
+        addLevel = lastLevel
+        insertGroup = []
+
+        for level, groupNodes in enumerate(self.nodeGroups):
+            insideLevel = all([n.isParallelNode(node) for n in groupNodes])
+            if insideLevel:
+                addLevel = level
+                break
+            if not insideLevel and node.ts < groupNodes[0].ts:
+                insertGroup.append(node)
+                addLevel = level
+                break
+
+        if insertGroup:
+            self.nodeGroups.insert(addLevel, insertGroup)
+        else:
+            if addLevel == len(self.nodeGroups):
+                self.nodeGroups.append([node])
+            else:
+                self.nodeGroups[addLevel].append(node)
+
+
     def addEdge(self, nodeFrom: Node, nodeTo: Node):
         assert nodeFrom is not None
         assert nodeTo is not None
@@ -55,8 +84,8 @@ class MlirGraph:
     def toJson(self):
         graphDict: dict = {
             "version" : self.VERSION,
-            "nodes" : [n.__str__() for n in self.nodes],
-            "edges" : [e.__str__() for e in self.edges]
+            "nodes" : [n.__dict__() for n in self.nodes],
+            "edges" : [e.__dict__() for e in self.edges]
         }
 
         graphStr = json.dumps(graphDict)
@@ -65,7 +94,7 @@ class MlirGraph:
     # init graph from json object
     def fromJson(self, jsonObj):
         if not self.checkJsonValid(self, jsonObj):
-            msg = f"Bad input json format! {jsonObj[:100]} ..."
+            msg = f"Bad input json format! {json.dumps(jsonObj, indent=2)[:100]} ..."
             LOG.log(l.ERROR, msg)
             raise RuntimeError(msg)
 
@@ -78,10 +107,11 @@ class MlirGraph:
         self.nodes = [None] * graphSize
         self.nodeID = graphSize
         self.edges.clear()
+        self.nodeGroups.clear()
 
         for nEncoded in jsonObj["nodes"]:
             graphNode = Node(nEncoded)
-            self.nodes[graphNode.uid] = graphNode
+            self.addNode(graphNode, graphNode.uid)
 
         for eEncoded in jsonObj["edges"]:
             graphEdge = Edge(eEncoded)
