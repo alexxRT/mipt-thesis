@@ -1,0 +1,6 @@
+[submodule "src/op_annotations"]
+	path = src/op_annotations
+	url = https://github.com/alexxRT/tensorflow-diploma-mlir
+[submodule "results/text/latexrun"]
+	path = results/text/latexrun
+	url = https://github.com/aclements/latexrun.git
