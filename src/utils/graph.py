@@ -3,6 +3,7 @@ from .node import Node
 from .edge import Edge
 import networkx as nx
 import logging as l
+from tqdm import tqdm
 
 
 LOG = l.Logger(__name__, l.INFO)
@@ -93,7 +94,7 @@ class MlirGraph:
 
     # init graph from json object
     def fromJson(self, jsonObj):
-        if not self.checkJsonValid(self, jsonObj):
+        if not self.checkJsonValid(jsonObj):
             msg = f"Bad input json format! {json.dumps(jsonObj, indent=2)[:100]} ..."
             LOG.log(l.ERROR, msg)
             raise RuntimeError(msg)
@@ -109,15 +110,15 @@ class MlirGraph:
         self.edges.clear()
         self.nodeGroups.clear()
 
-        for nEncoded in jsonObj["nodes"]:
-            graphNode = Node(nEncoded)
+        for nEncoded in tqdm(jsonObj["nodes"], "Reading mlir graph nodes", leave=False):
+            graphNode = Node(encodedNode=nEncoded)
             self.addNode(graphNode, graphNode.uid)
 
-        for eEncoded in jsonObj["edges"]:
-            graphEdge = Edge(eEncoded)
+        for eEncoded in tqdm(jsonObj["edges"], "Reading mlir graph edges", leave=False):
+            graphEdge = Edge(encodedEdge=eEncoded)
             self.addEdge(self.nodes[graphEdge.fromUid], self.nodes[graphEdge.toUid])
 
-    def checkJsonValisd(self, js) -> bool:
+    def checkJsonValid(self, js) -> bool:
         getVersion = js.get("version")
         getNodes = js.get("nodes")
         getEdges = js.get("edges")

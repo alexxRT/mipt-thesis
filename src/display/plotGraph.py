@@ -1,4 +1,8 @@
-from profiler.utils import MlirGraph
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from utils.graph import MlirGraph
 from pathlib import Path
 import logging
 import json
@@ -78,6 +82,7 @@ class DisplayDAG:
             raise RuntimeError(msg)
 
         # store to .svg:
+        LOG.log(logging.INFO, "Storing mlir graph to .svg")
         subprocess.run(['dot', '-Tsvg', str(pathToDot), '-o', str(outputFile)],
                         check=True, capture_output=True)
 
@@ -86,7 +91,7 @@ class DisplayDAG:
         min_duration = min(durations)
         max_duration = max(durations)
 
-        cmap = plt.cm.get_cmap('coolwarm')
+        cmap = plt.get_cmap('coolwarm')
 
         if max_duration > min_duration:
             norm = mcolors.Normalize(vmin=min_duration, vmax=max_duration)
@@ -137,7 +142,7 @@ class DisplayDAG:
 
 def main():
     parser = argparse.ArgumentParser(description="Plot Graph Script")
-    parser.add_argument('--path-to-mlir-graph', '-t', required=True, type=str, help='Path to the input serilized .json DAG')
+    parser.add_argument('--path-to-mlir-graph', '-p', required=True, type=str, help='Path to the input serilized .json DAG')
     parser.add_argument('--store-output', '-o', required=True, type=str, help='Path to store the output')
     parser.add_argument('--store-only', '-s', required=False, action='store_true', help='Store graph to .graphml format')
     args = parser.parse_args()
@@ -151,9 +156,9 @@ def main():
     if args.store_only:
         outputGraphPath = displayManager.storeGraph(output, "graphml")
     else:
-        outputDotPath = displayManager.storeGraph(output, "dot")
+        outputGraphPath = displayManager.storeGraph(output, "dot")
         if output.suffix == ".svg":
-            displayManager.plotGraphSvg(outputDotPath, output)
+            displayManager.plotGraphSvg(outputGraphPath, output)
 
     LOG.log(logging.INFO, f"Successfully stored graph to {outputGraphPath}")
 
@@ -162,5 +167,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        msg = "Failed to store/display input graph"
+        msg = f"Failed to store/display input graph {e}"
         LOG.log(logging.ERROR, msg)
