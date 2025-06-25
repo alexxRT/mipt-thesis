@@ -66,7 +66,8 @@ Traits и interfaces обеспечивают возможности для оп
 
 \subsubsection{Опыт LLVM в Profile-Guided Optimization (PGO)}
 
-LLVM предоставляет развитую инфраструктуру для оптимизации на основе профиля (PGO) с workflow \texttt{-fprofile-generate} / \texttt{-fprofile-use} \cite{llvm_pgo} и специализированным форматом профильных данных. Метаданные профиля включают branch weights, block frequencies и интеграцию с оптимизационными проходами.
+LLVM предоставляет развитую инфраструктуру для оптимизации на основе профиля (PGO) с workflow \texttt{-fprofile-generate} / \texttt{-fprofile-use} \cite{llvm_pgo} и специализированным форматом профильных данных.
+Метаданные профиля включают branch weights, block frequencies и интеграцию с оптимизационными проходами.
 Применимость LLVM PGO к MLIR ограничена различиями в уровне абстракции и необходимостью адаптации для ML-специфичных метрик, таких как время выполнения тензорных операций и характеристики использования памяти.
 
 \subsubsection{Ограничения текущих подходов}
