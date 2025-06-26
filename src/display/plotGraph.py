@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import subprocess
 import argparse
+import pandas as pd
+from collections import defaultdict
 
 logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger(__name__)
@@ -85,6 +87,17 @@ class DisplayDAG:
         LOG.log(logging.INFO, "Storing mlir graph to .svg")
         subprocess.run(['dot', '-Tsvg', str(pathToDot), '-o', str(outputFile)],
                         check=True, capture_output=True)
+
+    def getOpStats(self, supportedOps: list[str]):
+        opStats = defaultdict(list)
+
+        for node in self.mlirDag.nodes:
+            if node.name in supportedOps:
+                opStats["name"].append(node.name)
+                opStats["duration"].append(node.dur)
+                opStats["ts"].append(node.ts)
+
+        return pd.DataFrame(opStats)
 
     # utils methods
     def __getColorUtils(self, durations: list):
