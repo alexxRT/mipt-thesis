@@ -9,7 +9,7 @@
 
 Промежуточным этапом на пути к этому стало создание собственного представления трассы операций в виде направленного ациклического графа .
 
-\subsubsection{Что было сделано}
+\subsubsection{Проделанная работа}
 В рамках выполнения данной задачи был разработан универсальный подход к промежуточной сериализации, предполагающий сохранение событий в формате направленного ациклического графа.
 Основной целью разработки являлось восстановление зависимостей между операциями на основе анализа их временных характеристик — времени начала и длительности исполнения.
 Это позволило определить последовательность, а также возможный параллелизм выполнения операций.
@@ -118,7 +118,7 @@ python3 traceReader.py --path-to-trace trace.pb(.json) --store-output mlir_graph
 Классовая организация, высокая модульность и гибкая архитектура MLIR делают возможным простое расширение функциональности существующих диалектов.
 В рамках данной работы была реализована система аннотирования операций диалекта \texttt{tf} (TensorFlow) в соответствии с архитектурными принципами MLIR.
 
-\subsubsection{Что было сделано}
+\subsubsection{Проделанная работа}
 
 В рамках работы была выполнена модификация диалекта \texttt{TensorFlow:tf}, заключающаяся в добавлении интерфейса для работы с аннотациями.
 Также был реализован и зарегистрирован специализированный pipeline, сопровождаемый набором опций, позволяющим задать путь к сериализованному файлу формата \texttt{JSON} посредством аргумента командной строки.
@@ -187,18 +187,18 @@ template <typename ConcreteType>
 class ProfileAnnotation : public TraitBase<ConcreteType, ProfileAnnotation> {
     public:
         // Implements methods required for TF_ProfilerAnnotationsInterface
-        void AttachProfilerData(const ProfilerData& data);
+        void attachProfilerData(const ProfilerData& data);
 
-        ProfilerData GetProfilerData();
+        ProfilerData getProfilerData();
 
-        bool HasProfilerData();
+        bool hasProfilerData();
 };
 \end{lstlisting}
 
-В качестве результата разработки, ниже приведена реализация метода \texttt{AttachProfilerData}, предназначенного для присвоения аннотаций операции:
+В качестве результата разработки, ниже приведена реализация метода \texttt{attachProfilerData}, предназначенного для присвоения аннотаций операции:
 
-\begin{lstlisting}[caption={Реализация метода AttachProfilerData}]
-void AttachProfilerData(const ProfilerData& data) {
+\begin{lstlisting}[caption={Реализация метода attachProfilerData}]
+void attachProfilerData(const ProfilerData& data) {
     Operation* op = this->getOperation();
     MLIRContext* context = op->getContext();
 
@@ -258,13 +258,10 @@ void AnnotateOperationsProfilePass::runOnOperation() {
   ModuleOp op = getOperation();
 
   op.walk([&](Operation* nestedOp) {
-    if (nestedOp->getDialect() &&
-        nestedOp->getDialect()->getNamespace() == "tf") {
-        if (nestedOp->hasTrait<ProfileAnnotation>()) {
-            ProfilerData data(0, 0);
-            readProfilerData(&data, nestedOp);
-            nestedOp->AttachProfilerData(data);
-        }
+    if (auto opInterface = dyn_cast<ProfileAnnotationInterface>(nestedOp)) {
+        ProfilerData data(0, 0);
+        readProfilerData(&data, nestedOp);
+        opInterface.attachProfilerData(data);
     }
   });
 }
@@ -296,7 +293,7 @@ void CreateTFProfileGuidedPipeline(OpPassManager &pm,
 
 \subsection{Визуализация DAG}
 
-\subsubsection{Что было сделано}
+\subsubsection{Проделанная работа}
 
 В рамках данной работы был разработан инструмент для визуального анализа сериализованного направленного ациклического графа (DAG, от англ. Directed Acyclic Graph), реализованный в виде модуля \textbf{plotGraph.py}.
 Данный модуль принимает на вход сериализованный файл в формате JSON, содержащий описание DAG, который является результатом работы компонента \texttt{traceReader.py}.
