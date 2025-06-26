@@ -1,0 +1,475 @@
+{
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "name": "TFE_Py_FastPathExecute_C",
+      "ts": 2238000000,
+      "duration": 7236000000,
+      "id": 0,
+      "adj": [
+        4
+      ]
+    },
+    {
+      "name": "EagerExecute",
+      "ts": 2322000000,
+      "duration": 7143000000,
+      "id": 1,
+      "adj": []
+    },
+    {
+      "name": "EagerLocalExecute: MatMul",
+      "ts": 2324000000,
+      "duration": 7139000000,
+      "id": 2,
+      "adj": []
+    },
+    {
+      "name": "EagerCopyToDevice",
+      "ts": 2341000000,
+      "duration": 2000000,
+      "id": 3,
+      "adj": []
+    },
+    {
+      "name": "ValidateInputTypeAndPlacement",
+      "ts": 3035000000,
+      "duration": 0,
+      "id": 4,
+      "adj": [
+        5,
+        6
+      ]
+    },
+    {
+      "name": "EagerKernelExecute",
+      "ts": 3036000000,
+      "duration": 6426000000,
+      "id": 5,
+      "adj": [
+        7
+      ]
+    },
+    {
+      "name": "KernelAndDeviceFunc::Run",
+      "ts": 3037000000,
+      "duration": 6423000000,
+      "id": 6,
+      "adj": []
+    },
+    {
+      "name": "convert_to_tensor",
+      "ts": 9518000000,
+      "duration": 9000000,
+      "id": 7,
+      "adj": [
+        8
+      ]
+    },
+    {
+      "name": "convert_to_tensor",
+      "ts": 9536000000,
+      "duration": 4000000,
+      "id": 8,
+      "adj": [
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "TFE_Py_FastPathExecute_C",
+      "ts": 9546000000,
+      "duration": 6891000000,
+      "id": 9,
+      "adj": [
+        13
+      ]
+    },
+    {
+      "name": "EagerExecute",
+      "ts": 9574000000,
+      "duration": 6853000000,
+      "id": 10,
+      "adj": []
+    },
+    {
+      "name": "EagerLocalExecute: AddV2",
+      "ts": 9576000000,
+      "duration": 6849000000,
+      "id": 11,
+      "adj": []
+    },
+    {
+      "name": "EagerCopyToDevice",
+      "ts": 9594000000,
+      "duration": 3000000,
+      "id": 12,
+      "adj": []
+    },
+    {
+      "name": "ValidateInputTypeAndPlacement",
+      "ts": 10119000000,
+      "duration": 0,
+      "id": 13,
+      "adj": [
+        14,
+        15
+      ]
+    },
+    {
+      "name": "EagerKernelExecute",
+      "ts": 10120000000,
+      "duration": 6304000000,
+      "id": 14,
+      "adj": [
+        16
+      ]
+    },
+    {
+      "name": "KernelAndDeviceFunc::Run",
+      "ts": 10121000000,
+      "duration": 6300000000,
+      "id": 15,
+      "adj": [
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "name": "TFE_Py_FastPathExecute_C",
+      "ts": 16465000000,
+      "duration": 1957000000,
+      "id": 16,
+      "adj": [
+        20
+      ]
+    },
+    {
+      "name": "EagerExecute",
+      "ts": 16493000000,
+      "duration": 1926000000,
+      "id": 17,
+      "adj": []
+    },
+    {
+      "name": "EagerLocalExecute: Relu",
+      "ts": 16496000000,
+      "duration": 1922000000,
+      "id": 18,
+      "adj": []
+    },
+    {
+      "name": "EagerCopyToDevice",
+      "ts": 16517000000,
+      "duration": 2000000,
+      "id": 19,
+      "adj": []
+    },
+    {
+      "name": "ValidateInputTypeAndPlacement",
+      "ts": 17026000000,
+      "duration": 0,
+      "id": 20,
+      "adj": [
+        21,
+        22
+      ]
+    },
+    {
+      "name": "EagerKernelExecute",
+      "ts": 17027000000,
+      "duration": 1390000000,
+      "id": 21,
+      "adj": [
+        23
+      ]
+    },
+    {
+      "name": "KernelAndDeviceFunc::Run",
+      "ts": 17028000000,
+      "duration": 1388000000,
+      "id": 22,
+      "adj": [
+        24,
+        25,
+        26
+      ]
+    },
+    {
+      "name": "tf.constant",
+      "ts": 18495000000,
+      "duration": 435000000,
+      "id": 23,
+      "adj": [
+        27
+      ]
+    },
+    {
+      "name": "EagerExecute",
+      "ts": 18526000000,
+      "duration": 400000000,
+      "id": 24,
+      "adj": []
+    },
+    {
+      "name": "EagerLocalExecute: _EagerConst",
+      "ts": 18528000000,
+      "duration": 398000000,
+      "id": 25,
+      "adj": []
+    },
+    {
+      "name": "EagerCopyToDevice",
+      "ts": 18537000000,
+      "duration": 1000000,
+      "id": 26,
+      "adj": []
+    },
+    {
+      "name": "ValidateInputTypeAndPlacement",
+      "ts": 18896000000,
+      "duration": 0,
+      "id": 27,
+      "adj": [
+        28,
+        29
+      ]
+    },
+    {
+      "name": "EagerKernelExecute",
+      "ts": 18897000000,
+      "duration": 28000000,
+      "id": 28,
+      "adj": [
+        30
+      ]
+    },
+    {
+      "name": "KernelAndDeviceFunc::Run",
+      "ts": 18898000000,
+      "duration": 27000000,
+      "id": 29,
+      "adj": []
+    },
+    {
+      "name": "TFE_DeleteTensorHandle",
+      "ts": 18927000000,
+      "duration": 0,
+      "id": 30,
+      "adj": [
+        31,
+        32,
+        33,
+        34
+      ]
+    },
+    {
+      "name": "TFE_Py_FastPathExecute_C",
+      "ts": 18937000000,
+      "duration": 3378000000,
+      "id": 31,
+      "adj": [
+        35
+      ]
+    },
+    {
+      "name": "EagerExecute",
+      "ts": 18951000000,
+      "duration": 3358000000,
+      "id": 32,
+      "adj": []
+    },
+    {
+      "name": "EagerLocalExecute: Sum",
+      "ts": 18952000000,
+      "duration": 3357000000,
+      "id": 33,
+      "adj": []
+    },
+    {
+      "name": "EagerCopyToDevice",
+      "ts": 18962000000,
+      "duration": 1000000,
+      "id": 34,
+      "adj": []
+    },
+    {
+      "name": "ValidateInputTypeAndPlacement",
+      "ts": 19272000000,
+      "duration": 0,
+      "id": 35,
+      "adj": [
+        36,
+        37
+      ]
+    },
+    {
+      "name": "EagerKernelExecute",
+      "ts": 19273000000,
+      "duration": 3034000000,
+      "id": 36,
+      "adj": [
+        38
+      ]
+    },
+    {
+      "name": "KernelAndDeviceFunc::Run",
+      "ts": 19273000000,
+      "duration": 3033000000,
+      "id": 37,
+      "adj": []
+    },
+    {
+      "name": "TFE_DeleteTensorHandle",
+      "ts": 22322000000,
+      "duration": 2000000,
+      "id": 38,
+      "adj": []
+    }
+  ],
+  "edges": [
+    {
+      "edgeFrom": 0,
+      "edgeTo": 4
+    },
+    {
+      "edgeFrom": 4,
+      "edgeTo": 5
+    },
+    {
+      "edgeFrom": 4,
+      "edgeTo": 6
+    },
+    {
+      "edgeFrom": 5,
+      "edgeTo": 7
+    },
+    {
+      "edgeFrom": 7,
+      "edgeTo": 8
+    },
+    {
+      "edgeFrom": 8,
+      "edgeTo": 9
+    },
+    {
+      "edgeFrom": 8,
+      "edgeTo": 10
+    },
+    {
+      "edgeFrom": 8,
+      "edgeTo": 11
+    },
+    {
+      "edgeFrom": 8,
+      "edgeTo": 12
+    },
+    {
+      "edgeFrom": 9,
+      "edgeTo": 13
+    },
+    {
+      "edgeFrom": 13,
+      "edgeTo": 14
+    },
+    {
+      "edgeFrom": 13,
+      "edgeTo": 15
+    },
+    {
+      "edgeFrom": 14,
+      "edgeTo": 16
+    },
+    {
+      "edgeFrom": 15,
+      "edgeTo": 17
+    },
+    {
+      "edgeFrom": 15,
+      "edgeTo": 18
+    },
+    {
+      "edgeFrom": 15,
+      "edgeTo": 19
+    },
+    {
+      "edgeFrom": 16,
+      "edgeTo": 20
+    },
+    {
+      "edgeFrom": 20,
+      "edgeTo": 21
+    },
+    {
+      "edgeFrom": 20,
+      "edgeTo": 22
+    },
+    {
+      "edgeFrom": 21,
+      "edgeTo": 23
+    },
+    {
+      "edgeFrom": 22,
+      "edgeTo": 24
+    },
+    {
+      "edgeFrom": 22,
+      "edgeTo": 25
+    },
+    {
+      "edgeFrom": 22,
+      "edgeTo": 26
+    },
+    {
+      "edgeFrom": 23,
+      "edgeTo": 27
+    },
+    {
+      "edgeFrom": 27,
+      "edgeTo": 28
+    },
+    {
+      "edgeFrom": 27,
+      "edgeTo": 29
+    },
+    {
+      "edgeFrom": 28,
+      "edgeTo": 30
+    },
+    {
+      "edgeFrom": 30,
+      "edgeTo": 31
+    },
+    {
+      "edgeFrom": 30,
+      "edgeTo": 32
+    },
+    {
+      "edgeFrom": 30,
+      "edgeTo": 33
+    },
+    {
+      "edgeFrom": 30,
+      "edgeTo": 34
+    },
+    {
+      "edgeFrom": 31,
+      "edgeTo": 35
+    },
+    {
+      "edgeFrom": 35,
+      "edgeTo": 36
+    },
+    {
+      "edgeFrom": 35,
+      "edgeTo": 37
+    },
+    {
+      "edgeFrom": 36,
+      "edgeTo": 38
+    }
+  ]
+}
