@@ -108,7 +108,7 @@ f"{self.TMP_DIR} already exists. Override cache or store new location?\n \
 
         print(f"1. {'-'*10} Serilizing TensorFlow Profiler output {'-'*10}")
         readOutput = self.TMP_DIR / 'read_profile.json'
-        readProfileCmd: str = f"python3 profiler/traceReader.py -t {pathToProfile} -o {readOutput}"
+        readProfileCmd: str = f"python3 -m profiler.traceReader -t {pathToProfile} -o {readOutput}"
         subprocess.run(readProfileCmd.split(), check=True)
 
         print(f"2. {'-'*10} Read DAG {'-'*10}")
