@@ -93,9 +93,9 @@ class DisplayDAG:
 
         for node in self.mlirDag.nodes:
             if node.name in supportedOps:
-                opStats["name"].append(node.name)
-                opStats["duration"].append(node.dur)
+                opStats["name"].append(f"tf.{node.name}")
                 opStats["ts"].append(node.ts)
+                opStats["duration"].append(node.dur)
 
         return pd.DataFrame(opStats)
 
